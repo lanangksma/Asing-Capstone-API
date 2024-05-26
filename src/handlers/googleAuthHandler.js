@@ -22,6 +22,7 @@ const handleGoogleAuth = async (request, h) => {
     const newUser = {
       email: email,
       name: profile.displayName,
+      photoUrl: profile.raw.picture,
     };
     const userRef = await firestore.collection("users").add(newUser);
     userId = userRef.id;

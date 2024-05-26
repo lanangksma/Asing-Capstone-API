@@ -51,11 +51,13 @@ const register = async (request, h) => {
   const hash = hashPassword(password, salt);
   const id = crypto.randomUUID();
   const createdAt = new Date().toISOString();
+  const photoUrl = `api.multiavatar.com/${email}.svg`;
 
   const data = {
     id,
     email,
     password: `${salt}:${hash}`,
+    photoUrl,
     createdAt,
   };
 
