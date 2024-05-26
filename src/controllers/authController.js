@@ -4,7 +4,15 @@ const hashPassword = require("../utils/hashPassword");
 const crypto = require("crypto");
 
 const register = async (request, h) => {
-  const { email, password } = request.payload;
+  const {
+    email,
+    password,
+    fullName,
+    heightCm,
+    weightKg,
+    ageYears,
+    armCircumferenceCm,
+  } = request.payload;
 
   if (!email || !password) {
     const response = h.response({
@@ -58,6 +66,11 @@ const register = async (request, h) => {
     email,
     password: `${salt}:${hash}`,
     photoUrl,
+    fullName,
+    heightCm: parseFloat(heightCm),
+    weightKg: parseFloat(weightKg),
+    ageYears: parseInt(ageYears),
+    armCircumferenceCm: parseFloat(armCircumferenceCm),
     createdAt,
   };
 
@@ -120,6 +133,13 @@ const login = async (request, h) => {
   const loginResult = {
     userId: user.id,
     email: user.email,
+    photoUrl: user.photoUrl,
+    fullName: user.fullName,
+    photoUrl: user.photoUrl,
+    weightKg: user.weightKg,
+    heightCm: user.heightCm,
+    ageYears: user.ageYears,
+    armCircumferenceCm: user.armCircumferenceCm,
     token: token,
   };
 
@@ -127,9 +147,7 @@ const login = async (request, h) => {
 };
 
 const profile = (request, h) => {
-  const token = request.headers.authorization.split(" ")[1];
-
-  return { user: request.auth.credentials.user, token };
+  return { user: request.auth.credentials.user };
 };
 
 const logout = async (request, h) => {
