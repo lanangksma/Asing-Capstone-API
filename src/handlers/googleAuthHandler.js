@@ -9,6 +9,7 @@ const handleGoogleAuth = async (request, h) => {
   // Extract user details from Google profile
   const profile = request.auth.credentials.profile;
   const email = profile.email;
+  const id = `G-${profile.id}`;
 
   // Check if user exists in the Firestore
   const userSnapshot = await firestore
@@ -20,6 +21,7 @@ const handleGoogleAuth = async (request, h) => {
   if (userSnapshot.empty) {
     // If user does not exist, create new user
     const newUser = {
+      id: id,
       email: email,
       name: profile.displayName,
       photoUrl: profile.raw.picture,
