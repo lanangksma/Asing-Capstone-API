@@ -49,9 +49,9 @@ const register = async (request, h) => {
 
   const salt = crypto.randomBytes(16).toString("hex");
   const hash = hashPassword(password, salt);
-  const id = crypto.randomUUID();
+  const id = `userId-${crypto.randomUUID()}`;
   const createdAt = new Date().toISOString();
-  const photoUrl = `api.multiavatar.com/${email}.svg`;
+  const photoUrl = `source.boringavatars.com/beam/120/${email}?colors=b6d8c0,dadabd,fedcba`;
 
   const data = {
     id,
