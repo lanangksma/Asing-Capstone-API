@@ -1,5 +1,5 @@
-const firestore = require("../config/firebase");
-const { nanoid } = require("nanoid");
+const firestore = require("../config/firestore");
+// const { nanoid } = require("nanoid");
 
 const addFood = async (request, h) => {
   const { name, calories, proteins, carbohydrate, fat, image, id } =
@@ -38,8 +38,14 @@ const addFood = async (request, h) => {
     image,
   };
 
-  await firestore.collection("foods").add(food);
+  await fs_food.collection("foods").add(food);
 
+  // const response = h.response({
+  //   status: "success",
+  //   message: "Food added successfully",
+  // });
+  // response.code(201);
+  // return response;
   return {
     status: "success",
     message: "Food added successfully",
@@ -60,7 +66,7 @@ const foodGetByName = async (request, h) => {
 
   const foodSnapshot = await firestore
     .collection("foods")
-    .where("name", "=", name)
+    .where("name", "==", name)
     .get();
 
   if (foodSnapshot.empty) {

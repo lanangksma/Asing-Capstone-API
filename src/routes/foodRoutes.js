@@ -4,17 +4,11 @@ const foodsRoutes = [
     {
         method: "POST",
         path: "/add",
-        options: {
-            auth: false,
-        },
         handler: foodsController.addFood,
     },
     {
         method: "GET",
-        path: "/find/{name}",
-        options: {
-            auth: false,
-        },
+        path: "/food/{name}",
         handler: foodsController.foodGetByName,
     },
 ];

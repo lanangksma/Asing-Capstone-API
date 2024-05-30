@@ -1,8 +1,13 @@
 const { Firestore } = require('@google-cloud/firestore');
 
-const firestore = new Firestore({
+const fs_users = new Firestore({
     projectId: 'dragon-frost',
     databaseId: 'users'
 });
 
-module.exports = firestore;
+const fs_food = new Firestore({
+    projectId: 'dragon-frost',
+    databaseId: 'food-nutrition'
+})
+
+module.exports = { fs_users, fs_food };

@@ -4,6 +4,7 @@ const Bell = require("@hapi/bell");
 const authRoutes = require("./routes/authRoutes");
 const googleAuthRoutes = require("./routes/googleAuthRoutes");
 const { validate } = require("./validators/jwtValidator"); // Mengimpor fungsi validasi
+const foodsRoutes = require("./routes/foodRoutes");
 require("dotenv").config();
 
 const start = async () => {
@@ -43,7 +44,7 @@ const start = async () => {
 
   server.auth.default("jwt");
 
-  server.route([...authRoutes, ...googleAuthRoutes]);
+  server.route([...authRoutes, ...googleAuthRoutes, ...foodsRoutes]);
 
   await server.start();
   console.log("Server running on %s", server.info.uri);
