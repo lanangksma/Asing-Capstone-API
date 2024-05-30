@@ -1,5 +1,4 @@
-const firestore = require("../config/firestore");
-// const { nanoid } = require("nanoid");
+const { fs_food } = require("../config/firestore");
 
 const addFood = async (request, h) => {
   const { name, calories, proteins, carbohydrate, fat, image, id } =
@@ -14,7 +13,7 @@ const addFood = async (request, h) => {
     return response;
   }
 
-  const foodSnapshot = await firestore
+  const foodSnapshot = await fs_food
     .collection("foods")
     .where("name", "==", name)
     .get();
