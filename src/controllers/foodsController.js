@@ -39,12 +39,6 @@ const addFood = async (request, h) => {
 
   await fs_food.collection("foods").add(food);
 
-  // const response = h.response({
-  //   status: "success",
-  //   message: "Food added successfully",
-  // });
-  // response.code(201);
-  // return response;
   return {
     status: "success",
     message: "Food added successfully",
@@ -63,7 +57,7 @@ const foodGetByName = async (request, h) => {
     return response;
   }
 
-  const foodSnapshot = await firestore
+  const foodSnapshot = await fs_food
     .collection("foods")
     .where("name", "==", name)
     .get();
@@ -77,7 +71,7 @@ const foodGetByName = async (request, h) => {
     return response;
   }
 
-  const food = foodSnapshot.docs[0].data();
+  const food = foodSnapshot.docs[0].data()
 
   return {
     status: "success",
