@@ -5,7 +5,10 @@ const googleAuthRoutes = [
     method: ["GET", "POST"],
     path: "/auth/google",
     options: {
-      auth: "google",
+      auth: {
+        mode: "try",
+        strategy: "google",
+      },
       handler: googleAuthHandler.handleGoogleAuth,
     },
   },

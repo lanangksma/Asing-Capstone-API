@@ -4,7 +4,6 @@ const Bell = require("@hapi/bell");
 const authRoutes = require("./routes/authRoutes");
 const googleAuthRoutes = require("./routes/googleAuthRoutes");
 const { validate } = require("./validators/jwtValidator"); // Mengimpor fungsi validasi
-const foodsRoutes = require("./routes/foodRoutes");
 require("dotenv").config();
 
 const start = async () => {
@@ -39,12 +38,12 @@ const start = async () => {
     password: process.env.GOOGLE_PASSWORD,
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    isSecure: false,
+    isSecure: process.env.NODE_ENV === "production",
   });
 
   server.auth.default("jwt");
 
-  server.route([...authRoutes, ...googleAuthRoutes, ...foodsRoutes]);
+  server.route([...authRoutes, ...googleAuthRoutes]);
 
   await server.start();
   console.log("Server running on %s", server.info.uri);
