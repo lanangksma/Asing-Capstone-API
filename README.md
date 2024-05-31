@@ -91,11 +91,6 @@
 
   - `Authorization`:`Bearer <token>`
 
-- Request Body
-
-  - `email` as `String`
-  - `password` as `String`
-
 - Response
 
 ```json
@@ -128,4 +123,39 @@ curl -X POST -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.
 
 ```bash
 curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.app/profile
+```
+
+## Update Profile
+
+- URL
+
+  - Profile: `/profile`
+
+- Method
+
+  - GET
+
+- Headers
+
+  - `Authorization`:`Bearer <token>`
+
+- Request Body
+
+  - `fullName` as `String`
+  - `weightKg` as `Float`
+  - `ageYears` as `Integer`
+  - `armCircumferenceCm` as `Float`
+
+- Response
+
+```json
+{
+  "status": "success",
+  "result": {
+    "fullName": "Onana Onana",
+    "ageYears": 19,
+    "weightKg": 70.69,
+    "armCircumferenceCm": 13.5
+  }
+}
 ```
