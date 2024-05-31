@@ -1,4 +1,4 @@
-const firestore = require("../config/firestore");
+const { firestore } = require("../config/firestore");
 const { verifyToken } = require("../utils/jwt");
 
 const validate = async (artifacts, request, h) => {

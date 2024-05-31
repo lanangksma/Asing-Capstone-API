@@ -1,5 +1,4 @@
-const firestore = require("../config/firebase");
-const { nanoid } = require("nanoid");
+const { fs_food } = require("../config/firestore");
 
 const addFood = async (request, h) => {
   const { name, calories, proteins, carbohydrate, fat, image, id } =
@@ -14,7 +13,7 @@ const addFood = async (request, h) => {
     return response;
   }
 
-  const foodSnapshot = await firestore
+  const foodSnapshot = await fs_food
     .collection("foods")
     .where("name", "==", name)
     .get();
@@ -38,10 +37,46 @@ const addFood = async (request, h) => {
     image,
   };
 
-  await firestore.collection("foods").add(food);
+  await fs_food.collection("foods").add(food);
 
   return {
     status: "success",
     message: "Food added successfully",
   };
 };
+
+const foodGetByName = async (request, h) => {
+  const { name } = request.params;
+
+  if (!name) {
+    const response = h.response({
+      status: "fail",
+      message: "Name is required",
+    });
+    response.code(400);
+    return response;
+  }
+
+  const foodSnapshot = await fs_food
+    .collection("foods")
+    .where("name", "==", name)
+    .get();
+
+  if (foodSnapshot.empty) {
+    const response = h.response({
+      status: "fail",
+      message: "Food not found",
+    });
+    response.code(404);
+    return response;
+  }
+
+  const food = foodSnapshot.docs[0].data()
+
+  return {
+    status: "success",
+    data: food,
+  };
+};
+
+module.exports = { addFood, foodGetByName };
