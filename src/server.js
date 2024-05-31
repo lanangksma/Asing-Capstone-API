@@ -38,7 +38,7 @@ const start = async () => {
     password: process.env.GOOGLE_PASSWORD,
     clientId: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    isSecure: false,
+    isSecure: process.env.NODE_ENV === "production",
   });
 
   server.auth.default("jwt");
