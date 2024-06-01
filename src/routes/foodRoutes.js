@@ -11,6 +11,11 @@ const foodsRoutes = [
         path: "/food/{name}",
         handler: foodsController.foodGetByName,
     },
+    {
+        method: "POST",
+        path: "/addmany",
+        handler: foodsController.addFoods,
+    },
 ];
 
 module.exports = foodsRoutes;
