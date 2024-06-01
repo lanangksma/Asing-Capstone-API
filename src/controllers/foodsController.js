@@ -30,10 +30,10 @@ const addFood = async (request, h) => {
   const food = {
     name,
     id,
-    calories,
-    proteins,
-    carbohydrate,
-    fat
+    calories: parseFloat(calories),
+    proteins: parseFloat(proteins),
+    carbohydrate: parseFloat(carbohydrate),
+    fat: parseFloat(fat)
   };
 
   await fs_food.collection("foods").add(food);
@@ -43,6 +43,7 @@ const addFood = async (request, h) => {
     message: "Food added successfully",
   };
 };
+
 
 const addFoods = async (request, h) => {
   const foodsToAdd = request.payload; // Assuming request.payload is an array of food objects
@@ -57,13 +58,16 @@ const addFoods = async (request, h) => {
   }
 
   const validationErrors = foodsToAdd.some(food => {
-    return !food.id || !food.name || !food.calories || !food.proteins || !food.carbohydrate || !food.fat;
+    return !food.id || !food.name || typeof food.calories !== 'number' ||
+      typeof food.proteins !== 'number' || typeof food.fat !== 'number' ||
+      typeof food.carbohydrate !== 'number' || food.calories < 0 ||
+      food.proteins < 0 || food.fat < 0 || food.carbohydrate < 0;
   });
 
   if (validationErrors) {
     const response = h.response({
       status: "fail",
-      message: "All fields are required for each food object",
+      message: "All fields are required for each food object and must be valid. 'calories', 'proteins', 'fat', and 'carbohydrate' must be non-negative numbers.",
     });
     response.code(400);
     return response;
