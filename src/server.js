@@ -6,6 +6,7 @@ const googleAuthRoutes = require("./routes/googleAuthRoutes");
 const foodsRoutes = require("./routes/foodRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const { validate } = require("./validators/jwtValidator");
+const InputError = require("./exceptions/InputError");
 
 require("dotenv").config();
 
@@ -52,6 +53,31 @@ const start = async () => {
     ...foodsRoutes,
     ...profileRoutes,
   ]);
+
+  server.ext("onPreResponse", (request, h) => {
+    const { response } = request;
+
+    if (response instanceof InputError) {
+      return h
+        .response({
+          status: "fail",
+          message: "Terjadi kesalahan dalam melakukan prediksi",
+        })
+        .code(400);
+    }
+
+    if (response.isBoom && response.output.statusCode === 413) {
+      return h
+        .response({
+          status: "fail",
+          message:
+            "Payload content length greater than maximum allowed: 1000000",
+        })
+        .code(413);
+    }
+
+    return h.continue;
+  });
 
   await server.start();
   console.log("Server running on %s", server.info.uri);
