@@ -1,8 +1,7 @@
 const { fs_food } = require("../config/firestore");
 
 const addFood = async (request, h) => {
-  const { name, calories, proteins, carbohydrate, fat, id } =
-    request.payload;
+  const { name, calories, proteins, carbohydrate, fat, id } = request.payload;
 
   if (!id || !name || !calories || !proteins || !carbohydrate || !fat) {
     const response = h.response({
@@ -33,7 +32,7 @@ const addFood = async (request, h) => {
     calories: parseFloat(calories),
     proteins: parseFloat(proteins),
     carbohydrate: parseFloat(carbohydrate),
-    fat: parseFloat(fat)
+    fat: parseFloat(fat),
   };
 
   await fs_food.collection("foods").add(food);
@@ -43,7 +42,6 @@ const addFood = async (request, h) => {
     message: "Food added successfully",
   };
 };
-
 
 const addFoods = async (request, h) => {
   const foodsToAdd = request.payload; // Assuming request.payload is an array of food objects
@@ -57,17 +55,26 @@ const addFoods = async (request, h) => {
     return response;
   }
 
-  const validationErrors = foodsToAdd.some(food => {
-    return !food.id || !food.name || typeof food.calories !== 'number' ||
-      typeof food.proteins !== 'number' || typeof food.fat !== 'number' ||
-      typeof food.carbohydrate !== 'number' || food.calories < 0 ||
-      food.proteins < 0 || food.fat < 0 || food.carbohydrate < 0;
+  const validationErrors = foodsToAdd.some((food) => {
+    return (
+      !food.id ||
+      !food.name ||
+      typeof food.calories !== "number" ||
+      typeof food.proteins !== "number" ||
+      typeof food.fat !== "number" ||
+      typeof food.carbohydrate !== "number" ||
+      food.calories < 0 ||
+      food.proteins < 0 ||
+      food.fat < 0 ||
+      food.carbohydrate < 0
+    );
   });
 
   if (validationErrors) {
     const response = h.response({
       status: "fail",
-      message: "All fields are required for each food object and must be valid. 'calories', 'proteins', 'fat', and 'carbohydrate' must be non-negative numbers.",
+      message:
+        "All fields are required for each food object and must be valid. 'calories', 'proteins', 'fat', and 'carbohydrate' must be non-negative numbers.",
     });
     response.code(400);
     return response;
@@ -76,17 +83,19 @@ const addFoods = async (request, h) => {
   const existingFoodNames = new Set();
   const existingFoodsSnapshot = await fs_food.collection("foods").get();
 
-  existingFoodsSnapshot.forEach(doc => {
+  existingFoodsSnapshot.forEach((doc) => {
     existingFoodNames.add(doc.data().name.toLowerCase());
   });
 
-  const duplicateFoodNames = foodsToAdd.filter(food => existingFoodNames.has(food.name.toLowerCase()));
+  const duplicateFoodNames = foodsToAdd.filter((food) =>
+    existingFoodNames.has(food.name.toLowerCase())
+  );
 
   if (duplicateFoodNames.length > 0) {
     const response = h.response({
       status: "fail",
       message: "Some foods already exist",
-      duplicates: duplicateFoodNames.map(food => food.name),
+      duplicates: duplicateFoodNames.map((food) => food.name),
     });
     response.code(409);
     return response;
@@ -94,7 +103,7 @@ const addFoods = async (request, h) => {
 
   const batch = fs_food.batch();
 
-  foodsToAdd.forEach(food => {
+  foodsToAdd.forEach((food) => {
     batch.set(fs_food.collection("foods").doc(), food);
   });
 
@@ -106,39 +115,45 @@ const addFoods = async (request, h) => {
   };
 };
 
-
 const foodGetByName = async (request, h) => {
-  const { name } = request.params;
+  try {
+    const { name } = request.params;
 
-  if (!name) {
-    const response = h.response({
-      status: "fail",
-      message: "Name is required",
-    });
-    response.code(400);
-    return response;
+    if (!name) {
+      const response = h.response({
+        status: "fail",
+        message: "Name is required",
+      });
+      response.code(400);
+      return response;
+    }
+
+    const foodSnapshot = await fs_food
+      .collection("foods")
+      .where("name", "==", name)
+      .get();
+
+    if (foodSnapshot.empty) {
+      const response = h.response({
+        status: "fail",
+        message: "Food not found",
+      });
+      response.code(404);
+      return response;
+    }
+
+    const food = foodSnapshot.docs[0].data();
+
+    return {
+      status: "success",
+      data: food,
+    };
+  } catch (error) {
+    throw new InputError(
+      "Terjadi kesalahan dalam mendapatkan nama makanan",
+      500
+    );
   }
-
-  const foodSnapshot = await fs_food
-    .collection("foods")
-    .where("name", "==", name)
-    .get();
-
-  if (foodSnapshot.empty) {
-    const response = h.response({
-      status: "fail",
-      message: "Food not found",
-    });
-    response.code(404);
-    return response;
-  }
-
-  const food = foodSnapshot.docs[0].data()
-
-  return {
-    status: "success",
-    data: food,
-  };
 };
 
 module.exports = { addFood, foodGetByName, addFoods };
