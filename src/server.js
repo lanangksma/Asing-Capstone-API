@@ -7,6 +7,8 @@ const foodsRoutes = require("./routes/foodRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const { validate } = require("./validators/jwtValidator");
 const InputError = require("./exceptions/InputError");
+const loadModel = require("./config/loadModel");
+const predictRoute = require("./routes/predictRoute");
 
 require("dotenv").config();
 
@@ -20,6 +22,9 @@ const start = async () => {
       },
     },
   });
+
+  const model = await loadModel();
+  server.app.model = model;
 
   await server.register([Jwt, Bell]);
 
@@ -52,6 +57,7 @@ const start = async () => {
     ...googleAuthRoutes,
     ...foodsRoutes,
     ...profileRoutes,
+    ...predictRoute,
   ]);
 
   server.ext("onPreResponse", (request, h) => {
