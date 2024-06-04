@@ -36,7 +36,7 @@ const start = async () => {
       sub: false,
       nbf: true,
       exp: true,
-      maxAgeSec: 14400,
+      maxAgeSec: 43200,
       timeSkewSec: 15,
     },
     validate,
@@ -70,6 +70,13 @@ const start = async () => {
           message: "Terjadi kesalahan dalam melakukan prediksi",
         })
         .code(400);
+    }
+
+    if (response.isBoom && response.output.statusCode === 401) {
+      const { message } = response.output.payload;
+      if (message === "Token maximum age exceeded") {
+        response.output.payload.message = "Session ended, please login again";
+      }
     }
 
     if (response.isBoom && response.output.statusCode === 413) {

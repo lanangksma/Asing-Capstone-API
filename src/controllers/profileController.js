@@ -2,9 +2,16 @@ const { firestore } = require("../config/firestore");
 
 const updateProfile = async (request, h) => {
   const { user } = request.auth.credentials;
-  const { fullName, ageYears, weightKg, armCircumferenceCm } = request.payload;
+  const { fullName, ageYears, weightKg, armCircumferenceCm, heightCm } =
+    request.payload;
 
-  const dataValidation = { fullName, ageYears, weightKg, armCircumferenceCm };
+  const dataValidation = {
+    fullName,
+    ageYears,
+    weightKg,
+    armCircumferenceCm,
+    heightCm,
+  };
 
   if (!dataValidation) {
     const response = h.response({
@@ -20,6 +27,7 @@ const updateProfile = async (request, h) => {
     ageYears: ageYears,
     weightKg: weightKg,
     armCircumferenceCm: armCircumferenceCm,
+    heightCm: heightCm,
   };
 
   // if (!name && !photoUrl) {
