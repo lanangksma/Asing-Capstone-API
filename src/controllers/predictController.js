@@ -9,17 +9,16 @@ const predict = async (request, h) => {
   // console.log("UID: ", id); debug
 
   try {
-    const { confidenceScore, predictedLabel } = await predictClassification(
-      model,
-      image
-    );
+    const { recommendation, predictedClassName, confidenceScore } =
+      await predictClassification(model, image);
 
     const userSnapshot = await firestore.collection("users").doc(id).get();
     const user = userSnapshot.data();
 
     const prediction = {
+      predictedClassName,
+      recommendation,
       confidenceScore,
-      predictedLabel,
       userId: id,
       userEmail: user.email,
       userFullName: user.fullName,
