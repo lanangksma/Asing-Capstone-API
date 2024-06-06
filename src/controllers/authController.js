@@ -3,6 +3,7 @@ const { generateToken } = require("../utils/jwt");
 const hashPassword = require("../utils/hashPassword");
 const crypto = require("crypto");
 const InputError = require("../exceptions/InputError");
+const { verifyToken } = require("../utils/jwt");
 
 const register = async (request, h) => {
   try {
@@ -155,6 +156,30 @@ const login = async (request, h) => {
   }
 };
 
+const checkToken = async (request, h) => {
+  try {
+    const token = request.headers.authorization.split(" ")[1];
+    const blacklistSnapshot = await firestore
+      .collection("blacklist")
+      .where("token", "==", token)
+      .get();
+
+    if (!blacklistSnapshot.empty) {
+      const response = h.response({
+        status: "fail",
+        message: "Token is blacklisted",
+      });
+      response.code(401);
+      return response;
+    }
+
+    const decoded = verifyToken(token);
+    return { status: "success", message: "Token is valid", decoded };
+  } catch (error) {
+    throw new Error("Terjadi kesalahan dalam mengecek token", 500);
+  }
+};
+
 const profile = (request, h) => {
   return { user: request.auth.credentials.user };
 };
@@ -171,4 +196,4 @@ const logout = async (request, h) => {
   }
 };
 
-module.exports = { register, login, profile, logout };
+module.exports = { register, login, profile, logout, checkToken };
