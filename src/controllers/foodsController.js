@@ -107,13 +107,13 @@ const addFoods = async (request, h) => {
 };
 
 
-const foodGetByName = async (request, h) => {
-  const { name } = request.params;
+const foodGetById = async (request, h) => {
+  const { id } = request.params;
 
-  if (!name) {
+  if (!id) {
     const response = h.response({
       status: "fail",
-      message: "Name is required",
+      message: "Id is required",
     });
     response.code(400);
     return response;
@@ -121,7 +121,7 @@ const foodGetByName = async (request, h) => {
 
   const foodSnapshot = await fs_food
     .collection("foods")
-    .where("name", "==", name)
+    .where("id", "==", id)
     .get();
 
   if (foodSnapshot.empty) {
@@ -141,4 +141,4 @@ const foodGetByName = async (request, h) => {
   };
 };
 
-module.exports = { addFood, foodGetByName, addFoods };
+module.exports = { addFood, foodGetById, addFoods };

@@ -8,8 +8,8 @@ const foodsRoutes = [
     },
     {
         method: "GET",
-        path: "/food/{name}",
-        handler: foodsController.foodGetByName,
+        path: "/food/{id}",
+        handler: foodsController.foodGetById,
     },
     {
         method: "POST",
