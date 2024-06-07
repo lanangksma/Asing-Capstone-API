@@ -6,6 +6,7 @@ const googleAuthRoutes = require("./routes/googleAuthRoutes");
 const foodsRoutes = require("./routes/foodRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const { validate } = require("./validators/jwtValidator");
+const tipsRoutes = require("./routes/tipsRoutes");
 
 require("dotenv").config();
 
@@ -51,6 +52,7 @@ const start = async () => {
     ...googleAuthRoutes,
     ...foodsRoutes,
     ...profileRoutes,
+    ...tipsRoutes
   ]);
 
   await server.start();
