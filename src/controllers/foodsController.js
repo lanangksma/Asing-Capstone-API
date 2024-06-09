@@ -116,6 +116,7 @@ const addFoods = async (request, h) => {
 };
 
 const foodGetById = async (request, h) => {
+  try{
   const { id } = request.params;
 
   if (!id) {
@@ -139,7 +140,7 @@ const foodGetById = async (request, h) => {
     });
     response.code(404);
     return response;
-
+    
     const food = foodSnapshot.docs[0].data();
 
     return {
@@ -151,7 +152,8 @@ const foodGetById = async (request, h) => {
       "Terjadi kesalahan dalam mendapatkan nama makanan",
       500
     );
-  }
+  };
+};
 };
 
 module.exports = { addFood, foodGetById, addFoods };
