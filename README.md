@@ -160,6 +160,78 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
 }
 ```
 
+## Check Token
+
+- URL
+
+  - check: `/check-token`
+
+- Method
+
+  - GET
+
+- Response
+
+```json
+{
+    "status": "success",
+    "message": "Token is valid",
+    "decoded": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InVzZXJJZC0xZTlhMTY2Ni0wOGYxLTQzMWYtOGJmZS05ZjM1NDQ3ZTc0ZDkiLCJlbWFpbCI6ImxhbmFuZ2tzbWExMEBtYWlsLmNvbSIsImlhdCI6MTcxNzkzNzU4MX0.kNz0fbM0Ejeow41iZJEVMrSDQGoi7DGIlPDORejqkVA",
+        "decoded": {
+            "header": {
+                "alg": "HS256",
+                "typ": "JWT"
+            },
+            "payload": {
+                "id": "userId-1e9a1666-08f1-431f-8bfe-9f35447e74d9",
+                "email": "lanangksma10@mail.com",
+                "iat": 1717937581
+            },
+            "signature": "kNz0fbM0Ejeow41iZJEVMrSDQGoi7DGIlPDORejqkVA"
+        },
+        "raw": {
+            "header": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+            "payload": "eyJpZCI6InVzZXJJZC0xZTlhMTY2Ni0wOGYxLTQzMWYtOGJmZS05ZjM1NDQ3ZTc0ZDkiLCJlbWFpbCI6ImxhbmFuZ2tzbWExMEBtYWlsLmNvbSIsImlhdCI6MTcxNzkzNzU4MX0",
+            "signature": "kNz0fbM0Ejeow41iZJEVMrSDQGoi7DGIlPDORejqkVA"
+        }
+    }
+}
+```
+
+## Progress
+
+- URL
+
+  - progress: `/progress`
+
+- Method
+
+  - For update `POST`
+  - `GET` to get data
+
+- Request Body
+
+  - `progress` as `String`
+
+- Response
+
+```json
+{
+    "status": "success",
+    "result": [
+        {
+            "id": "progress_20240609",
+            "progress": "311 kkal",
+            "timestamp": {
+                "date": "20240609",
+                "time": "20:3:19"
+            }
+        }
+    ]
+}
+```
+
 ## Get Food Nutrition
 
 - URL
