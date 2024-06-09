@@ -6,6 +6,9 @@ const googleAuthRoutes = require("./routes/googleAuthRoutes");
 const foodsRoutes = require("./routes/foodRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const { validate } = require("./validators/jwtValidator");
+const InputError = require("./exceptions/InputError");
+const loadModel = require("./config/loadModel");
+const predictRoute = require("./routes/predictRoute");
 
 require("dotenv").config();
 
@@ -20,6 +23,9 @@ const start = async () => {
     },
   });
 
+  const model = await loadModel();
+  server.app.model = model;
+
   await server.register([Jwt, Bell]);
 
   server.auth.strategy("jwt", "jwt", {
@@ -30,7 +36,7 @@ const start = async () => {
       sub: false,
       nbf: true,
       exp: true,
-      maxAgeSec: 14400,
+      maxAgeSec: 43200,
       timeSkewSec: 15,
     },
     validate,
@@ -51,7 +57,41 @@ const start = async () => {
     ...googleAuthRoutes,
     ...foodsRoutes,
     ...profileRoutes,
+    ...predictRoute,
   ]);
+
+  server.ext("onPreResponse", (request, h) => {
+    const { response } = request;
+
+    if (response instanceof InputError) {
+      return h
+        .response({
+          status: "fail",
+          message:
+            "Terjadi kesalahan dalam melakukan prediksi, silahkan coba lagi dengan gambar yang berbeda",
+        })
+        .code(400);
+    }
+
+    if (response.isBoom && response.output.statusCode === 401) {
+      const { message } = response.output.payload;
+      if (message === "Token maximum age exceeded") {
+        response.output.payload.message = "Session ended, please login again";
+      }
+    }
+
+    if (response.isBoom && response.output.statusCode === 413) {
+      return h
+        .response({
+          status: "fail",
+          message:
+            "Payload content length greater than maximum allowed: 1000000",
+        })
+        .code(413);
+    }
+
+    return h.continue;
+  });
 
   await server.start();
   console.log("Server running on %s", server.info.uri);

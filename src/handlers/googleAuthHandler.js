@@ -1,4 +1,4 @@
-const firestore = require("../config/firestore");
+const { firestore } = require("../config/firestore");
 const { generateToken } = require("../utils/jwt");
 
 const handleGoogleAuth = async (request, h) => {
