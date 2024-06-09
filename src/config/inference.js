@@ -24,11 +24,6 @@ const classMapping = [
   { "Class Index": "19", "Class Name": "wortel" },
 ];
 
-const classIndices = classMapping.reduce((acc, obj) => {
-  acc[obj["Class Name"]] = parseInt(obj["Class Index"]);
-  return acc;
-}, {});
-
 const postPrediction = async (model, image) => {
   try {
     const preProcessImage = tf.node
@@ -44,11 +39,9 @@ const postPrediction = async (model, image) => {
     const predictedClassIndex = tf.argMax(prediction, 1).dataSync()[0];
     const predictedClassName = classMapping[predictedClassIndex]["Class Name"];
 
-    // Check if the predicted class is in the dataset
+    // Check if the confidence score is above the threshold
     const recommendation =
-      predictedClassName in classIndices
-        ? "DIREKOMENDASIKAN"
-        : "TIDAK DIREKOMENDASIKAN";
+      confidenceScore > 65 ? "DIREKOMENDASIKAN" : "TIDAK DIREKOMENDASIKAN";
 
     return { predictedClassName, recommendation, confidenceScore };
   } catch (error) {

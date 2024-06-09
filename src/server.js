@@ -67,7 +67,8 @@ const start = async () => {
       return h
         .response({
           status: "fail",
-          message: "Terjadi kesalahan dalam melakukan prediksi",
+          message:
+            "Terjadi kesalahan dalam melakukan prediksi, silahkan coba lagi dengan gambar yang berbeda",
         })
         .code(400);
     }
