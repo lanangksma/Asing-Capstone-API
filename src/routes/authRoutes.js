@@ -27,6 +27,11 @@ const authRoutes = [
     path: "/logout",
     handler: authController.logout,
   },
+  {
+    method: "GET",
+    path: "/check-token",
+    handler: authController.checkToken,
+  },
 ];
 
 module.exports = authRoutes;
