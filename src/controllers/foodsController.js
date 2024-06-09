@@ -115,33 +115,31 @@ const addFoods = async (request, h) => {
   };
 };
 
-const foodGetByName = async (request, h) => {
-  try {
-    const { name } = request.params;
+const foodGetById = async (request, h) => {
+  const { id } = request.params;
 
-    if (!name) {
-      const response = h.response({
-        status: "fail",
-        message: "Name is required",
-      });
-      response.code(400);
-      return response;
-    }
+  if (!id) {
+    const response = h.response({
+      status: "fail",
+      message: "Id is required",
+    });
+    response.code(400);
+    return response;
+  }
 
-    const foodSnapshot = await fs_food
-      .collection("foods")
-      .where("name", "==", name)
-      .get();
+  const foodSnapshot = await fs_food
+    .collection("foods")
+    .where("id", "==", id)
+    .get();
 
-    if (foodSnapshot.empty) {
-      const response = h.response({
-        status: "fail",
-        message: "Food not found",
-      });
-      response.code(404);
-      return response;
-    }
-
+  if (foodSnapshot.empty) {
+    const response = h.response({
+      status: "fail",
+      message: "Food not found",
+    });
+    response.code(404);
+    return response;
+    
     const food = foodSnapshot.docs[0].data();
 
     return {
@@ -153,7 +151,7 @@ const foodGetByName = async (request, h) => {
       "Terjadi kesalahan dalam mendapatkan nama makanan",
       500
     );
-  }
+  };
 };
 
-module.exports = { addFood, foodGetByName, addFoods };
+module.exports = { addFood, foodGetById, addFoods };
