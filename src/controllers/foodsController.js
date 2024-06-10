@@ -116,6 +116,7 @@ const addFoods = async (request, h) => {
 };
 
 const foodGetById = async (request, h) => {
+  try{
   const { id } = request.params;
 
   if (!id) {
@@ -152,6 +153,7 @@ const foodGetById = async (request, h) => {
       500
     );
   };
+};
 };
 
 module.exports = { addFood, foodGetById, addFoods };

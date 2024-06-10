@@ -6,6 +6,7 @@ const googleAuthRoutes = require("./routes/googleAuthRoutes");
 const foodsRoutes = require("./routes/foodRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const { validate } = require("./validators/jwtValidator");
+const tipsRoutes = require("./routes/tipsRoutes");
 const InputError = require("./exceptions/InputError");
 const loadModel = require("./config/loadModel");
 const predictRoute = require("./routes/predictRoute");
@@ -57,6 +58,7 @@ const start = async () => {
     ...googleAuthRoutes,
     ...foodsRoutes,
     ...profileRoutes,
+    ...tipsRoutes,
     ...predictRoute,
   ]);
 
