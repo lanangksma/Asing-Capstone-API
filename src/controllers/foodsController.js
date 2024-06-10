@@ -154,6 +154,5 @@ const foodGetById = async (request, h) => {
     );
   };
 };
-};
 
 module.exports = { addFood, foodGetById, addFoods };
