@@ -1,6 +1,6 @@
 # Asing-Capstone-API
 
-**ENDPOINT**: https://asing-api-m73lmtgayq-et.a.run.app
+**ENDPOINT**: <https://asing-api-m73lmtgayq-et.a.run.app>
 
 ## REGISTER
 
@@ -133,7 +133,7 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
 
 - Method
 
-  - GET
+  - POST
 
 - Headers
 
@@ -156,6 +156,145 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
     "ageYears": 19,
     "weightKg": 70.69,
     "armCircumferenceCm": 13.5
+  }
+}
+```
+
+## Check Token
+
+- URL
+
+  - check: `/check-token`
+
+- Method
+
+  - GET
+
+- Response
+
+```json
+{
+    "status": "success",
+    "message": "Token is valid",
+    "decoded": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6InVzZXJJZC0xZTlhMTY2Ni0wOGYxLTQzMWYtOGJmZS05ZjM1NDQ3ZTc0ZDkiLCJlbWFpbCI6ImxhbmFuZ2tzbWExMEBtYWlsLmNvbSIsImlhdCI6MTcxNzkzNzU4MX0.kNz0fbM0Ejeow41iZJEVMrSDQGoi7DGIlPDORejqkVA",
+        "decoded": {
+            "header": {
+                "alg": "HS256",
+                "typ": "JWT"
+            },
+            "payload": {
+                "id": "userId-1e9a1666-08f1-431f-8bfe-9f35447e74d9",
+                "email": "lanangksma10@mail.com",
+                "iat": 1717937581
+            },
+            "signature": "kNz0fbM0Ejeow41iZJEVMrSDQGoi7DGIlPDORejqkVA"
+        },
+        "raw": {
+            "header": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+            "payload": "eyJpZCI6InVzZXJJZC0xZTlhMTY2Ni0wOGYxLTQzMWYtOGJmZS05ZjM1NDQ3ZTc0ZDkiLCJlbWFpbCI6ImxhbmFuZ2tzbWExMEBtYWlsLmNvbSIsImlhdCI6MTcxNzkzNzU4MX0",
+            "signature": "kNz0fbM0Ejeow41iZJEVMrSDQGoi7DGIlPDORejqkVA"
+        }
+    }
+}
+```
+
+## Progress
+
+- URL
+
+  - progress: `/progress`
+
+- Method
+
+  - For update `POST`
+  - `GET` to get data
+
+- Request Body
+
+  - `progress` as `String`
+
+- Response
+
+```json
+{
+    "status": "success",
+    "result": [
+        {
+            "id": "progress_20240609",
+            "progress": "311 kkal",
+            "timestamp": {
+                "date": "20240609",
+                "time": "20:3:19"
+            }
+        }
+    ]
+}
+```
+
+## Get Food Nutrition
+
+- URL
+
+  - Food: `/food/{name}`
+
+- Method
+
+  - GET
+
+- Headers
+
+  - `Authorization`:`Bearer <token>`
+
+- Response
+
+```json
+{
+  "status": "success",
+  "data": {
+    "proteins": 9.2,
+    "name": "Abon",
+    "fat": 28.4,
+    "id": "1",
+    "calories": 280,
+    "carbohydrate": 0
+  }
+}
+```
+
+> NOTE: it is still sensitive, type name must capital on first char
+
+## Prediction
+
+- URL
+
+  - Predict: `/predict`
+
+- Method
+
+  - POST
+
+- Headers
+
+  - `Authorization`:`Bearer <token>`
+
+- Request Body
+
+  - `multipart/form-data` as `image`
+
+- Response
+
+```json
+{
+  "status": "success",
+  "data": {
+    "predictedClassName": "ayam goreng",
+    "recommendation": "DIREKOMENDASIKAN",
+    "confidenceScore": 99.99977350234985,
+    "userId": "userId-1e9a1666-08f1-431f-8bfe-9f35447e74d9",
+    "userEmail": "lanangksma10@mail.com",
+    "userFullName": "Lanang Ksma",
+    "createdAt": "2024-06-06T04:46:11.481Z"
   }
 }
 ```

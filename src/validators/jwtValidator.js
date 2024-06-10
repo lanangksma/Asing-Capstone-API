@@ -27,6 +27,9 @@ const validate = async (artifacts, request, h) => {
 
     return { isValid: true, credentials: { user: userSnapshot.data() } };
   } catch (error) {
+    if (error.message === "Token maximum age exceeded") {
+      throw Boom.unauthorized("Session ended, please login again");
+    }
     console.error("Token validation error:", error);
     return { isValid: false };
   }
