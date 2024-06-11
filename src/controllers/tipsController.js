@@ -34,4 +34,11 @@ const tipsGetById = async (request, h) => {
     };
 };
 
-module.exports = { tipsGetById };
+const getAllTips = () => ({
+    status: 'success',
+    data: {
+        tips,
+    }
+});
+
+module.exports = { tipsGetById, getAllTips };
