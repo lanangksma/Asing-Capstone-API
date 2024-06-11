@@ -116,31 +116,31 @@ const addFoods = async (request, h) => {
 };
 
 const foodGetById = async (request, h) => {
-  try{
-  const { id } = request.params;
+  try {
+    const { id } = request.params;
 
-  if (!id) {
-    const response = h.response({
-      status: "fail",
-      message: "Id is required",
-    });
-    response.code(400);
-    return response;
-  }
+    if (!id) {
+      const response = h.response({
+        status: "fail",
+        message: "Id is required",
+      });
+      response.code(400);
+      return response;
+    }
 
-  const foodSnapshot = await fs_food
-    .collection("foods")
-    .where("id", "==", id)
-    .get();
+    const foodSnapshot = await fs_food
+      .collection("foods")
+      .where("id", "==", id)
+      .get();
 
-  if (foodSnapshot.empty) {
-    const response = h.response({
-      status: "fail",
-      message: "Food not found",
-    });
-    response.code(404);
-    return response;
-    
+    if (foodSnapshot.empty) {
+      const response = h.response({
+        status: "fail",
+        message: "Food not found",
+      });
+      response.code(404);
+      return response;
+    }
     const food = foodSnapshot.docs[0].data();
 
     return {
@@ -153,7 +153,6 @@ const foodGetById = async (request, h) => {
       500
     );
   };
-};
 };
 
 module.exports = { addFood, foodGetById, addFoods };

@@ -236,7 +236,7 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
 
 - URL
 
-  - Food: `/food/{name}`
+  - Food: `/food/{id}`
 
 - Method
 
@@ -259,6 +259,30 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
     "calories": 280,
     "carbohydrate": 0
   }
+}
+```
+
+## Get Tips
+- URL
+ - Tips: `/tips/{id}`
+
+- Method
+ - GET
+
+- Headers
+ - `Authorization` : `Bearer <token>`
+
+- Response
+
+```json
+{
+    "status": "success",
+    "data": {
+        "description": "Makanan olahan dan tinggi gula tambahan dapat memberikan kalori kosong tanpa nutrisi yang dibutuhkan. Gantilah dengan makanan segar seperti buah-buahan, sayuran, biji-bijian utuh, dan protein tanpa lemak. Hindari makanan cepat saji, minuman manis, dan camilan kemasan yang tinggi gula.",
+        "id": "5",
+        "title": "Hindari Makanan Olahan dan Gula Tambahan",
+        "image": "https://images.unsplash.com/photo-1610219171722-87b3f4170557?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjAxMzB8MHwxfHNlYXJjaHwxfHxzdWdhcnxlbnwwfHx8fDE3MTc5Mzk4ODB8MA&ixlib=rb-4.0.3&q=80&w=200"
+    }
 }
 ```
 
