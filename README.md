@@ -325,7 +325,6 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
 }
 ```
 
-> NOTE: it is still sensitive, type name must capital on first char
 
 ## Prediction
 
