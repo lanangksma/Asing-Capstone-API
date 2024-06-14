@@ -234,6 +234,8 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
 
 ## Get Food Nutrition
 
+### Get Food By Name
+
 - URL
 
   - Food: `/food?name=ayam goreng`
@@ -325,6 +327,36 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
     ]
 }
 ```
+
+### Get Food By id
+
+- URL
+
+  - Food: `/food/id/{id}`
+
+- Method
+
+  - GET
+
+- Headers
+
+  - `Authorization`:`Bearer <token>`
+
+- Response
+
+```json
+{
+    "status": "success",
+    "data": {
+        "proteins": 27,
+        "name": "ayam goreng",
+        "fat": 14,
+        "id": "1",
+        "calories": 246,
+        "carbohydrate": 0
+    }
+}
+```  
 
 ## Prediction
 
