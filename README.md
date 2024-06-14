@@ -264,13 +264,16 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
 
 ## Get Tips
 - URL
- - Tips: `/tips/{id}`
+
+  - Tips: `/tips/{id}`
 
 - Method
- - GET
+ 
+  - GET
 
 - Headers
- - `Authorization` : `Bearer <token>`
+
+  - `Authorization` : `Bearer <token>`
 
 - Response
 
@@ -286,7 +289,42 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
 }
 ```
 
-> NOTE: it is still sensitive, type name must capital on first char
+## Get All Tips
+- URL
+
+  - Tips: `/tips`
+
+- Method
+ 
+  - GET
+
+- Headers
+
+  - `Authorization` : `Bearer <token>`
+
+- Response
+
+```json
+{
+    "status": "success",
+    "data": [
+        {
+            "description": "Protein sangat penting untuk perkembangan bayi dan menjaga kesehatan ibu. Sumber protein berkualitas tinggi meliputi daging tanpa lemak, ikan, telur, kacang-kacangan, dan produk susu rendah lemak. Protein membantu membangun jaringan baru dan mendukung pertumbuhan janin.",
+            "id": "2",
+            "title": "Konsumsi Protein Berkualitas Tinggi",
+            "image": "https://images.unsplash.com/photo-1535473895227-bdecb20fb157?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjAxMzB8MHwxfHNlYXJjaHwxfHxwcm90ZWlufGVufDB8fHx8MTcxNzkzOTExMXww&ixlib=rb-4.0.3&q=80&w=200"
+        },
+        {
+            "description": "Asam folat penting untuk mencegah cacat tabung saraf pada bayi. Makanan kaya asam folat meliputi sayuran hijau, buah jeruk, kacang-kacangan, dan biji-bijian yang diperkaya. Pastikan untuk mendapatkan cukup asam folat dari makanan dan pertimbangkan suplemen jika diperlukan.",
+            "id": "4",
+            "title": "Perbanyak Asupan Asam Folat",
+            "image": "https://images.unsplash.com/photo-1546548970-71785318a17b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjAxMzB8MHwxfHNlYXJjaHwxfHxmb2xpYyUyMGFjaWR8ZW58MHx8fHwxNzE3OTM5MjMzfDA&ixlib=rb-4.0.3&q=80&w=200"
+        },
+        ...
+    ]
+}
+```
+
 
 ## Prediction
 
