@@ -234,9 +234,11 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
 
 ## Get Food Nutrition
 
+### Get Food By Name
+
 - URL
 
-  - Food: `/food/{id}`
+  - Food: `/food?name=ayam goreng`
 
 - Method
 
@@ -250,25 +252,56 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
 
 ```json
 {
-  "status": "success",
-  "data": {
-    "proteins": 9.2,
-    "name": "Abon",
-    "fat": 28.4,
-    "id": "1",
-    "calories": 280,
-    "carbohydrate": 0
-  }
+    "status": "success",
+    "data": {
+        "proteins": 27,
+        "name": "ayam goreng",
+        "fat": 14,
+        "id": "1",
+        "calories": 246,
+        "carbohydrate": 0
+    }
 }
 ```
 
+### Get Food By id
+
+- URL
+
+  - Food: `/food/id/{id}`
+
+- Method
+
+  - GET
+
+- Headers
+
+  - `Authorization`:`Bearer <token>`
+
+- Response
+
+```json
+{
+    "status": "success",
+    "data": {
+        "proteins": 27,
+        "name": "ayam goreng",
+        "fat": 14,
+        "id": "1",
+        "calories": 246,
+        "carbohydrate": 0
+    }
+}
+```  
+
 ## Get Tips
+
 - URL
 
   - Tips: `/tips/{id}`
 
 - Method
- 
+
   - GET
 
 - Headers
@@ -290,12 +323,13 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
 ```
 
 ## Get All Tips
+
 - URL
 
   - Tips: `/tips`
 
 - Method
- 
+
   - GET
 
 - Headers
@@ -320,12 +354,9 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
             "title": "Perbanyak Asupan Asam Folat",
             "image": "https://images.unsplash.com/photo-1546548970-71785318a17b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w2MjAxMzB8MHwxfHNlYXJjaHwxfHxmb2xpYyUyMGFjaWR8ZW58MHx8fHwxNzE3OTM5MjMzfDA&ixlib=rb-4.0.3&q=80&w=200"
         },
-        ...
     ]
 }
 ```
-
-> NOTE: it is still sensitive, type name must capital on first char
 
 ## Prediction
 

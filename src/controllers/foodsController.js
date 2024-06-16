@@ -115,6 +115,51 @@ const addFoods = async (request, h) => {
   };
 };
 
+const foodGetByName = async (request, h) => {
+  try {
+    const { name } = request.query;
+
+    if (!name) {
+      const response = h.response({
+        status: "fail",
+        message: "Name is required",
+      });
+      response.code(400);
+      return response;
+    }
+
+    const foodSnapshot = await fs_food
+      .collection("foods")
+      .where("name", "==", name)
+      .get();
+
+    if (foodSnapshot.empty) {
+      const response = h.response({
+        status: "fail",
+        message: "Food not found",
+      });
+      response.code(404);
+      return response;
+    }
+
+    const food = foodSnapshot.docs[0].data();
+
+    const response = h.response({
+      status: "success",
+      data: food,
+    });
+    response.code(200);
+    return response;
+  } catch (error) {
+    const response = h.response({
+      status: "error",
+      message: "Terjadi kesalahan dalam mendapatkan nama makanan",
+    });
+    response.code(500);
+    return response;
+  }
+};
+
 const foodGetById = async (request, h) => {
   try {
     const { id } = request.params;
@@ -133,26 +178,22 @@ const foodGetById = async (request, h) => {
       .where("id", "==", id)
       .get();
 
-    if (foodSnapshot.empty) {
-      const response = h.response({
-        status: "fail",
-        message: "Food not found",
-      });
-      response.code(404);
-      return response;
-    }
     const food = foodSnapshot.docs[0].data();
 
-    return {
+    const response = h.response({
       status: "success",
       data: food,
-    };
+    });
+    response.code(200);
+    return response;
   } catch (error) {
-    throw new InputError(
-      "Terjadi kesalahan dalam mendapatkan nama makanan",
-      500
-    );
-  };
+    const response = h.response({
+      status: "error",
+      message: "Terjadi kesalahan dalam mendapatkan id makanan",
+    });
+    response.code(500);
+    return response;
+  }
 };
 
-module.exports = { addFood, foodGetById, addFoods };
+module.exports = { addFood, foodGetById, foodGetByName, addFoods };

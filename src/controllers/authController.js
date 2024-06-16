@@ -62,7 +62,7 @@ const register = async (request, h) => {
     const hash = hashPassword(password, salt);
     const id = `userId-${crypto.randomUUID()}`;
     const createdAt = new Date().toISOString();
-    const photoUrl = `source.boringavatars.com/beam/120/${email}?colors=b6d8c0,dadabd,fedcba`;
+    const photoUrl = `https://source.boringavatars.com/beam/120/${email}?colors=b6d8c0,dadabd,fedcba`;
 
     const data = {
       id,
