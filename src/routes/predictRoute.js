@@ -1,4 +1,5 @@
 const predictController = require("../controllers/predictController");
+const historyData = require("../controllers/historyController");
 
 const predictRoute = [
   {
@@ -12,6 +13,11 @@ const predictRoute = [
       },
     },
     handler: predictController.predict,
+  },
+  {
+    method: "GET",
+    path: "/history",
+    handler: historyData,
   },
 ];
 
