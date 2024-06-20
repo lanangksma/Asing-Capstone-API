@@ -1,6 +1,6 @@
 /node_modules
 .env
 package-lock.json
-Dockerfile
+# Dockerfile
 commit.sh
 mulai.sh

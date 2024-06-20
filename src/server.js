@@ -82,6 +82,20 @@ const start = async () => {
       }
     }
 
+    if (response.isBoom && response.output.statusCode === 503) {
+      const { message } = response.output.payload;
+      if (message === "Network timeout") {
+        response.output.payload.message = "Network timeout, please try again";
+      } else if (message === "Network error") {
+        response.output.payload.message = "Network error, please try again";
+      } else if (message === "fetch") {
+        response.output.payload.message = "Error when fetching data";
+      } else {
+        response.output.payload.message =
+          "Service unavailable, please try again later";
+      }
+    }
+
     if (response.isBoom && response.output.statusCode === 413) {
       return h
         .response({

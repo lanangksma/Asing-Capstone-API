@@ -84,13 +84,23 @@ const getProgress = async (request, h) => {
       })
       .code(200);
   } catch (error) {
-    console.error("Error fetching progress:", error);
-    return h
-      .response({
-        status: "error",
-        message: "Terjadi kesalahan saat mengambil progres",
-      })
-      .code(500);
+    if (error.code === 400) {
+      console.error("Bad request:", error);
+      return h
+        .response({
+          status: "error",
+          message: "Permintaan tidak valid",
+        })
+        .code(400);
+    } else {
+      console.error("Error fetching progress:", error);
+      return h
+        .response({
+          status: "error",
+          message: "Terjadi kesalahan saat mengambil progres",
+        })
+        .code(500);
+    }
   }
 };
 

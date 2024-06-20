@@ -29,9 +29,9 @@ const postPrediction = async (model, image) => {
     const preProcessImage = tf.node
       .decodeImage(image)
       .resizeNearestNeighbor([224, 224])
-      .expandDims()
-      .toFloat()
-      .div(tf.scalar(255.0)); // Normalizing the image
+      .expandDims(0)
+      .div(255, 0)
+      .toFloat();
 
     const prediction = model.predict(preProcessImage);
     const classScores = await prediction.data();
