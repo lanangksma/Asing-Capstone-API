@@ -392,3 +392,68 @@ curl -H "Authorization: Bearer <token>" https://asing-api-m73lmtgayq-et.a.run.ap
   }
 }
 ```
+
+## Histories
+
+- URL
+
+  - Predict: `/history`
+
+- Method
+
+  - GET
+
+- Headers
+
+  - `Authorization`:`Bearer <token>`
+
+- Response
+
+```json
+{
+    "data": [
+        {
+            "predictId": "predict_KdvbREyy",
+            "history": {
+                "createdAt": "2024-06-20T16:26:32.814Z",
+                "confidenceScore": 99.21621680259705,
+                "imageUrl": "https://storage.googleapis.com/predict-history-asing/predict_KdvbREyy.jpg",
+                "userFullName": "Lanang Ksma",
+                "recommendation": "DIREKOMENDASIKAN",
+                "predictedClassName": "ayam goreng",
+                "userEmail": "lanangksma10@mail.com",
+                "id": "predict_KdvbREyy",
+                "userId": "userId-1e9a1666-08f1-431f-8bfe-9f35447e74d9"
+            }
+        },
+        {
+            "predictId": "predict_T4c9ibEc",
+            "history": {
+                "createdAt": "2024-06-20T16:22:07.062Z",
+                "confidenceScore": 99.21621680259705,
+                "imageUrl": "https://storage.googleapis.com/predict-history-asing/predict_T4c9ibEc.jpg",
+                "userFullName": "Lanang Ksma",
+                "recommendation": "DIREKOMENDASIKAN",
+                "predictedClassName": "ayam goreng",
+                "userEmail": "lanangksma10@mail.com",
+                "id": "predict_T4c9ibEc",
+                "userId": "userId-1e9a1666-08f1-431f-8bfe-9f35447e74d9"
+            }
+        },
+        {
+            "predictId": "predict_dXI2dtCR",
+            "history": {
+                "createdAt": "2024-06-20T16:21:43.578Z",
+                "confidenceScore": 99.96113181114197,
+                "imageUrl": "https://storage.googleapis.com/predict-history-asing/predict_dXI2dtCR.jpg",
+                "userFullName": "Lanang Ksma",
+                "recommendation": "DIREKOMENDASIKAN",
+                "predictedClassName": "ayam goreng",
+                "userEmail": "lanangksma10@mail.com",
+                "id": "predict_dXI2dtCR",
+                "userId": "userId-1e9a1666-08f1-431f-8bfe-9f35447e74d9"
+            }
+        }
+    ]
+}
+```
