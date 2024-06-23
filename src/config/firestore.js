@@ -10,9 +10,4 @@ const fs_food = new Firestore({
   databaseId: "food-nutrition",
 });
 
-const fs_tips = new Firestore({
-  projectId: "dragon-frost",
-  databaseId: "tips",
-})
-
-module.exports = { firestore, fs_food, fs_tips };
+module.exports = { firestore, fs_food };

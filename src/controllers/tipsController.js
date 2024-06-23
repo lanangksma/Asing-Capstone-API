@@ -1,4 +1,4 @@
-const { fs_tips } = require("../config/firestore");
+const { fs_food } = require("../config/firestore");
 
 const tipsGetById = async (request, h) => {
     try {
@@ -13,7 +13,7 @@ const tipsGetById = async (request, h) => {
             return response;
         }
 
-        const tipsSnapshot = await fs_tips
+        const tipsSnapshot = await fs_food
             .collection("tips")
             .where("id", "==", id)
             .get();
@@ -43,7 +43,7 @@ const tipsGetById = async (request, h) => {
 
 const getAllTips = async () => {
     try {
-        const tipsSnapshot = await fs_tips.collection("tips").get();
+        const tipsSnapshot = await fs_food.collection("tips").get();
 
         if (tipsSnapshot.empty) {
             const response = h.response({
